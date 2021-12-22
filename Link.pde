@@ -3,18 +3,21 @@
 class Link {
    private PVector dim;
    private PVector pos;
+   private color col;
    
    Link() {}
    
-   Link(PVector pos, PVector dim) {
+   Link(PVector pos, PVector dim, color col) {
      this.pos = pos;
      this.dim = dim;
+     this.col = col;
    }
    
    void render() {
-     //shapeMode(CENTER);    // <-- TAKE NOTE OF THE SHAPEMODE!
      
      rectMode(CENTER);    // <-- TAKE NOTE OF THE RECTMODE!
+     fill(0);
+     stroke(this.col);
      rect(this.pos.x, this.pos.y, this.dim.x, this.dim.y);
    }
    
@@ -34,6 +37,10 @@ class Link {
    
    void setXPos(float x) {
      this.pos.x = x; 
+   }
+   
+   void setColor(color c) {
+     this.col = c;  
    }
    
    // Getters

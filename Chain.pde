@@ -57,10 +57,21 @@ class Chain {
   void updateLinkWidths(PVector mousePos) {
     for (Link l : this.links) {
       PVector linkPos = l.getPos();
-      float dilateFactor = rationalFunc(linkPos, mousePos); // how much to dilate link
-      float newWidth = lerp(this.MIN_LINK_WIDTH, this.MAX_LINK_WIDTH, dilateFactor);
+      float lerpFactor = linearFunc(linkPos, mousePos); // how much to dilate link
+      float newWidth = lerp(this.MIN_LINK_WIDTH, this.MAX_LINK_WIDTH, lerpFactor);
       l.setWidth(newWidth);
+      
+      color gray = color(100, 100, 100);
+      color pink = color(240, 0, 255);
+      color newColor = lerpColor(gray, pink, lerpFactor);
+      l.setColor(newColor);
     }
+  }
+  
+  float linearFunc(PVector linkPos, PVector mousePos) {
+    float dist = PVector.dist(linkPos, mousePos);
+    float slope = -200.0;
+    return max((dist / slope) + 1, 0);
   }
   
   float rationalFunc(PVector linkPos, PVector mousePos) {

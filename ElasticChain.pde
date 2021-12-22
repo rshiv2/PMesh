@@ -9,7 +9,7 @@ void setup() {
   frameRate(30);
   
   PVector dim = new PVector(CHAIN_WIDTH, CHAIN_HEIGHT);
-  int numLinks = 5;
+  int numLinks = 10;
   
   int numChains = 10;
   chains = new ArrayList<Chain>();
