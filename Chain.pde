@@ -25,7 +25,7 @@ class Chain {
     float linkHeight = dim.y;
     float linkWidth =  dim.x / (numLinks + gapWidthRatio * numGaps);
     MIN_LINK_WIDTH = linkWidth;
-    MAX_LINK_WIDTH = linkWidth * 2;    // double length is arbitrary, can change whenever
+    MAX_LINK_WIDTH = linkWidth / 2;    // double length is arbitrary, can change whenever
     
     // Set chain dimensions
     float dimX = numLinks * linkWidth + numGaps * gapWidth;
