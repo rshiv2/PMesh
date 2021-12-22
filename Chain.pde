@@ -77,7 +77,7 @@ class Chain {
       float newWidth = lerp(this.MIN_LINK_WIDTH, this.MAX_LINK_WIDTH, lerpFactor);
       l.setWidth(newWidth);
       
-      color gray = color(100, 100, 100);
+      color gray = color(100, 100, 100, 50);
       color newColor = lerpColor(gray, this.col, lerpFactor);
       l.setColor(newColor);
     }
