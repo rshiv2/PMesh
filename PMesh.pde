@@ -29,8 +29,8 @@ void draw() {
   background(0);
   int currMouseX = mouseX;  // all chains should see the same mouse position
   int currMouseY = mouseY;  // all chains should see the same mouse position
-  for (Chain c : chains) {
-    c.update(new PVector(currMouseX, currMouseY));
-    c.render();
+  for (Chain t : chains) {
+    t.update(new PVector(currMouseX, currMouseY));
+    t.render();
   }
 }
