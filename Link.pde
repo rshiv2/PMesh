@@ -1,24 +1,32 @@
 // Link class
 
+// A Link is just a single unit of a chain. The only
+// parameters that can be customized are the Link's 
+// dimensions, center, and color. These parameters
+// are generally set by the Chain object that owns
+// this particular link.
 class Link {
-   private PVector dim;
-   private PVector pos;
-   private color col;
+  
+   private PVector dim;       // dimension
+   private PVector center;    // center
+   private color col;         // color
    
+   // Constructors
+   // ------------
    Link() {}
    
    Link(PVector pos, PVector dim, color col) {
-     this.pos = pos;
+     this.center = pos;
      this.dim = dim;
      this.col = col;
    }
    
+   // Renders the link given its current parameters
    void render() {
-     
      rectMode(CENTER);    // <-- TAKE NOTE OF THE RECTMODE!
      fill(0);
      stroke(this.col);
-     rect(this.pos.x, this.pos.y, this.dim.x, this.dim.y);
+     rect(this.center.x, this.center.y, this.dim.x, this.dim.y);
    }
    
    // Setters
@@ -31,12 +39,12 @@ class Link {
      this.dim.x = len; 
    }
    
-   void setPos(PVector pos) {
-     this.pos = pos;
+   void setCenter(PVector pos) {
+     this.center = pos;
    }
    
-   void setXPos(float x) {
-     this.pos.x = x; 
+   void setCenterX(float x) {
+     this.center.x = x; 
    }
    
    void setColor(color c) {
@@ -53,12 +61,12 @@ class Link {
      return this.dim.x;  
    }
    
-   PVector getPos() {
-     return this.pos;  
+   PVector getCenter() {
+     return this.center;  
    }
    
-   float getXPos() {
-     return this.pos.x;
+   float getCenterX() {
+     return this.center.x;
    }
    
    

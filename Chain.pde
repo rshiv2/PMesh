@@ -1,18 +1,23 @@
 // Chain class
 
-
+// A Chain is composed of several rectangles or Links.
+// Chains are oriented horizontally and are always
+// centered about the vertical axis, regardless of the
+// dimensions of its links or the number thereof.
 class Chain {
   
   private ArrayList<Link> links;       // set of links comprising this chain
   private PVector dim;                 // width and length of chain, including gaps between links
   
-  private float MIN_LINK_WIDTH;
-  private float MAX_LINK_WIDTH;
+  private float MIN_LINK_WIDTH;        // useful for computing length and color
+  private float MAX_LINK_WIDTH;        // useful for computing length and color
   
+  private float gapWidth;              // width of gaps between links
   private float gapWidthRatio = 0.2;   // width of gaps vs width of links
-  private float gapWidth;              // width of gaps
   
-  Chain(float y, PVector dim, int numLinks ) {
+  private color col;
+  
+  Chain(float y, PVector dim, int numLinks, color c ) {
     
     int numGaps = numLinks - 1;
     
@@ -20,7 +25,7 @@ class Chain {
     float linkHeight = dim.y;
     float linkWidth =  dim.x / (numLinks + gapWidthRatio * numGaps);
     MIN_LINK_WIDTH = linkWidth;
-    MAX_LINK_WIDTH = linkWidth * 2;
+    MAX_LINK_WIDTH = linkWidth * 2;    // double length is arbitrary, can change whenever
     
     // Set chain dimensions
     float dimX = numLinks * linkWidth + numGaps * gapWidth;
@@ -35,11 +40,14 @@ class Chain {
     links = new ArrayList<Link>();
     for (int l = 0; l < numLinks; l++) {
       links.add(new Link());
-      links.get(l).setPos(new PVector(linkMidpX, linkMidpY));
+      links.get(l).setCenter(new PVector(linkMidpX, linkMidpY));
       links.get(l).setDim(new PVector(linkWidth, linkHeight));
   
       linkMidpX += linkWidth + gapWidth;
     }
+    
+    // Set chain color
+    this.col = c;
   }
   
   void render() {
@@ -49,39 +57,45 @@ class Chain {
   }
   
   void update(PVector mousePos) {
+    
+    // Given current mouse position, update the length of each Link in Chain
     updateLinkWidths(mousePos);
+    
+    // Given new Link widths, update Chain dimensions
     updateSelf();
+    
+    // Given new Chain dimensions, determine where each Link should go to preserve gaps
     updateLinkPos();
   }
   
+  // Helper function to update width of this Chain's Links given
+  // current mouse position.
   void updateLinkWidths(PVector mousePos) {
     for (Link l : this.links) {
-      PVector linkPos = l.getPos();
+      PVector linkPos = l.getCenter();
       float lerpFactor = linearFunc(linkPos, mousePos); // how much to dilate link
       float newWidth = lerp(this.MIN_LINK_WIDTH, this.MAX_LINK_WIDTH, lerpFactor);
       l.setWidth(newWidth);
       
       color gray = color(100, 100, 100);
-      color pink = color(240, 0, 255);
-      color newColor = lerpColor(gray, pink, lerpFactor);
+      color newColor = lerpColor(gray, this.col, lerpFactor);
       l.setColor(newColor);
     }
   }
   
+  // Helper function for determining how much to dilate
+  // a link and what to color it given the current mouse
+  // position. Realizes the function:
+  // f(x) = max( - slope * x + 1, 0 )
   float linearFunc(PVector linkPos, PVector mousePos) {
     float dist = PVector.dist(linkPos, mousePos);
-    float slope = -200.0;
-    return max((dist / slope) + 1, 0);
+    float slope = -1.0/200;
+    return max((slope * dist) + 1, 0);
   }
   
-  float rationalFunc(PVector linkPos, PVector mousePos) {
-    
-    float epsilon = 1;
-    float a = 0.001;
-    PVector diff = PVector.sub(linkPos, mousePos);
-    return 1.0 / ( a * diff.magSq() + epsilon);
-  }
-  
+  // Updates Chain's dimensions to match the lengths of its
+  // constituent links. Chain's width must accomodate both the
+  // link widths and the gaps between those links.
   void updateSelf() {
     
     // compute new width of chain
@@ -97,16 +111,24 @@ class Chain {
     this.dim.x = totalWidth;
   }
  
+ // Updates position of Links within Chain
  void updateLinkPos() {
    float linkMidPt = width / 2 - this.dim.x / 2;
    
    for (Link l : this.links) {
      linkMidPt += l.getWidth() / 2;
-     l.setXPos(linkMidPt);
+     
+     l.setCenterX(linkMidPt);
      
      linkMidPt += l.getWidth() / 2 + this.gapWidth;
      
    }
+ }
+ 
+ // Setters
+ // ----------------------
+ void setColor(color c) {
+   this.col = c;  
  }
   
 }
