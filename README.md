@@ -1,8 +1,10 @@
 # PMesh
 
-<video width="640" height="400" controls>
-  <source src="pmesh.mp4" type="video/mp4">
-</video>
+
+https://user-images.githubusercontent.com/56366401/147175124-ff73b13b-efe0-4aff-9a2a-ad4d14c04565.mp4
+
+
+
 
 I wasn't really sure what to name this project, but P(rocessing)Mesh sounded about right. I saw a post on [r/processing](https://www.reddit.com/r/processing/comments/rhtyfq/elastic_type_the_copenhagen_series/?utm_source=share&utm_medium=web2x&context=3) that had a grid of rectangles. Each rectangle would expand depending on its distance from the cursor. I first saw this post at 2AM and my brain was not powerful enough to comprehend what I was watching, so I figured I would try to code it up the following day. Turned out to be a cool little project!
 
