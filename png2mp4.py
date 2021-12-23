@@ -1,3 +1,5 @@
+# Use this script to convert PNG image stack to MP4
+# Ensure that all PNG images are in a folder called "images/"
 import os
 import sys
 import cv2
