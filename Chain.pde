@@ -9,8 +9,8 @@ class Chain {
   private ArrayList<Link> links;       // set of links comprising this chain
   private PVector dim;                 // width and length of chain, including gaps between links
   
-  private float MIN_LINK_WIDTH;        // useful for computing length and color
-  private float MAX_LINK_WIDTH;        // useful for computing length and color
+  private float INIT_LINK_WIDTH;        // useful for computing length and color
+  private float FINAL_LINK_WIDTH;        // useful for computing length and color
   
   private float gapWidth;              // width of gaps between links
   private float gapWidthRatio = 0.2;   // width of gaps vs width of links
@@ -24,8 +24,8 @@ class Chain {
     // Set link dimensions
     float linkHeight = dim.y;
     float linkWidth =  dim.x / (numLinks + gapWidthRatio * numGaps);
-    MIN_LINK_WIDTH = linkWidth;
-    MAX_LINK_WIDTH = linkWidth / 2;    // double length is arbitrary, can change whenever
+    INIT_LINK_WIDTH = linkWidth;
+    FINAL_LINK_WIDTH = linkWidth / 4;    // double length is arbitrary, can change whenever
     
     // Set chain dimensions
     float dimX = numLinks * linkWidth + numGaps * gapWidth;
@@ -74,7 +74,7 @@ class Chain {
     for (Link l : this.links) {
       PVector linkPos = l.getCenter();
       float lerpFactor = linearFunc(linkPos, mousePos); // how much to dilate link
-      float newWidth = lerp(this.MIN_LINK_WIDTH, this.MAX_LINK_WIDTH, lerpFactor);
+      float newWidth = lerp(this.INIT_LINK_WIDTH, this.FINAL_LINK_WIDTH, lerpFactor);
       l.setWidth(newWidth);
       
       color gray = color(100, 100, 100, 50);
