@@ -33,4 +33,7 @@ void draw() {
     t.update(new PVector(currMouseX, currMouseY));
     t.render();
   }
+  
+  // this is just to save images to disk, can leave this uncommented
+  //saveFrame("img-####.png");
 }
